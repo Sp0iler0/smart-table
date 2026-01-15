@@ -100,7 +100,7 @@ async function init() {
     sampleTable.header.elements.sortByTotal
   ]);
 
-  // === ПАГИНАЦИЯ (шаг 2) — по примеру задания (data-name="...")
+  // === ПАГИНАЦИЯ (шаг 2) — по примеру задания
   ({ applyPagination, updatePagination } = initPagination(
     sampleTable.pagination.elements,
     (el, page, isCurrent) => {
