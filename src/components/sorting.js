@@ -1,24 +1,24 @@
-import { sortCollection, sortMap } from "../lib/sort.js";
+import { sortMap } from "../lib/sort.js"; // sortCollection больше не нужен
 
 export function initSorting(columns) {
-  return (data, state, action) => {
+  return (query, state, action) => {
     let field = null;
     let order = null;
 
     if (action && action.name === "sort") {
-      // @todo: #3.1 — запомнить выбранный режим сортировки
+      // запоминаем выбранный режим сортировки
       action.dataset.value = sortMap[action.dataset.value];
       field = action.dataset.field;
       order = action.dataset.value;
 
-      // @todo: #3.2 — сбросить сортировки остальных колонок
+      // сбрасываем сортировки остальных колонок
       columns.forEach((column) => {
-        if (column.dataset.field !== action.dataset.field) {
+        if (column.dataset.field !== field) {
           column.dataset.value = "none";
         }
       });
     } else {
-      // @todo: #3.3 — получить выбранный режим сортировки
+      // восстанавливаем текущее состояние сортировки
       columns.forEach((column) => {
         if (column.dataset.value !== "none") {
           field = column.dataset.field;
@@ -27,6 +27,14 @@ export function initSorting(columns) {
       });
     }
 
-    return sortCollection(data, field, order);
+    // параметр сортировки для сервера: field:direction
+    const sort =
+      field && order !== "none"
+        ? `${field}:${order}`
+        : null;
+
+    return sort
+      ? Object.assign({}, query, { sort })
+      : query;
   };
 }
