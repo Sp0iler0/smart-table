@@ -7,7 +7,7 @@ export function initData() {
   let lastResult;
   let lastQuery;
 
-  // функция для приведения строк в тот вид, который нужен нашей таблице
+  // функция для приведения строк в нужный вид
   const mapRecords = (data) => data.map(item => ({
     id: item.receipt_id,
     date: item.date,
@@ -37,7 +37,7 @@ export function initData() {
       return lastResult;
     }
 
-    // индексы нужны для mapRecords
+    // индексы для mapRecords
     await getIndexes();
 
     const response = await fetch(`${BASE_URL}/records?${nextQuery}`);

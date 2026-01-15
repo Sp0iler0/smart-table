@@ -27,7 +27,7 @@ export function initFiltering(elements) {
       }
     }
 
-    // формируем filter[...] параметры
+    // формируем filter параметры
     const filter = {};
 
     Object.keys(elements).forEach((key) => {

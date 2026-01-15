@@ -43,7 +43,7 @@ export const initPagination = ({ pages, fromRow, toRow, totalRows }, createPage)
   };
 
   /**
-   * Перерисовываем пагинатор ПОСЛЕ запроса (когда известен total)
+   * Перерисовываем пагинатор после запроса (когда известен total)
    */
   const updatePagination = (total, { page, limit }) => {
     const safeLimit = Number(limit) || 10;
@@ -60,7 +60,7 @@ export const initPagination = ({ pages, fromRow, toRow, totalRows }, createPage)
       })
     );
 
-    // статус пагинации (бывший @todo #2.5), rowsPerPage -> limit
+    // статус пагинации (бывший @todo #2.5)
     if (total === 0) {
       fromRow.textContent = 0;
       toRow.textContent = 0;
