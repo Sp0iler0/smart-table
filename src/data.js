@@ -4,10 +4,10 @@ export function initData() {
   // переменные для кеширования данных
   let sellers;
   let customers;
-  let lastResult = null;
-  let lastQuery = null;
+  let lastResult;
+  let lastQuery;
 
-  // функция для приведения строк в тот вид, который нужен нашей таблице
+  // функция для приведения строк в нужный вид
   const mapRecords = (data) => data.map(item => ({
     id: item.receipt_id,
     date: item.date,
@@ -33,8 +33,7 @@ export function initData() {
     const qs = new URLSearchParams(query);
     const nextQuery = qs.toString();
 
-    // защита: кеш использовать только если он реально есть
-    if (lastResult && lastQuery === nextQuery && !isUpdated) {
+    if (lastQuery === nextQuery && !isUpdated) {
       return lastResult;
     }
 
@@ -42,10 +41,6 @@ export function initData() {
     await getIndexes();
 
     const response = await fetch(`${BASE_URL}/records?${nextQuery}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch records: ${response.status}`);
-    }
-
     const records = await response.json();
 
     lastQuery = nextQuery;
